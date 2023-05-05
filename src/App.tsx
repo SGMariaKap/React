@@ -16,11 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faWheatAwn, faGlobe, faDroplet, faEarthEurope, faCow, faHouse, faChartLine, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 
-
 type Props={}
 type State = {
-  currentUser: IUser | undefined
+ // currentUser: IUser | undefined,
+  userToken: string
 }
+const thisuser= AuthService.getCurrentUser();
 
 class App extends Component<Props, State> {
   constructor(props: Props) {
@@ -28,16 +29,17 @@ class App extends Component<Props, State> {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      currentUser: undefined,
+     // currentUser: undefined,
+      userToken: ""
     };
   }
-
   componentDidMount() {
-    const user = AuthService.getCurrentUser();
+    const user1 = AuthService.getCurrentUser();
 
-    if (user) {
+    if (user1) {
       this.setState({
-        currentUser: user,
+      //  currentUser: undefined,
+        userToken: user1
       });
     }
 
@@ -51,17 +53,21 @@ class App extends Component<Props, State> {
   logOut() {
     AuthService.logout();
     this.setState({
-       currentUser: undefined,
+      // currentUser: undefined,
+       userToken: ""
      });
    }
 
   render() {
-    const { currentUser} = this.state;
+ //    const userToken = AuthService.getCurrentUser();
+ const userStr = localStorage.getItem("usertoken");
+     const { userToken} = this.state;
 
     return ( 
       <main className="flex-1">
-        {/* HEADER */}
-          {currentUser ? (
+        
+          {(userToken !== "") ? (
+
             <header className="page-header">
               <div className="page-header__bar">
               <div className="page-header__bar-wrapper">
@@ -151,7 +157,7 @@ class App extends Component<Props, State> {
           </Routes>
         </div>
    {/* MENU */}
-   {currentUser ? (
+   {(userToken !== "") ? (
             <div className="navbar js-menu-overlay">
               <ul className="navbar__nav">
                 <li className="navbar__nav-item">

@@ -23,15 +23,18 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem("usertoken");
   }
 
   getCurrentUser() {
-    const userStr = localStorage.getItem("user");
-    if (userStr) return JSON.parse(userStr);
+    const userStr = localStorage.getItem("usertoken");
+    if (userStr !== null ) return "1";
+    
     return null;
   }
-
+  setCurrentUser(userset: string) {
+   localStorage.setItem("usertoken", (userset));
+  }
   getCurrentLanguage () {
     const languageVar = localStorage.getItem("languageVar");
     if (languageVar) return JSON.parse(languageVar);

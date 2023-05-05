@@ -50,6 +50,10 @@ select {
     line-height: 1.9rem;
     color: #3f3e48;
 }
+
+.menuCrop label {
+  width: 100%;
+}
 .component-text h1, .component-text h2, .component-text h3, .component-text h4, .component-text h5 {
   color: #0074c7;
   margin-bottom: 2rem;
@@ -375,10 +379,11 @@ button.submit, button.submitFormCommande, button.submitFormCommandeSommaire, inp
   -webkit-appearance: button;
 }
 .texteBandTableau1 {
-  color: #4EB13F;
   font-size: 22px;
 }
-
+h3.texteBandTableau1 {
+  color: #4EB13F;
+}
 .menuCrop .submit, .menuExtra .submit, .menuExtraDL .submit, .menuIntraDL .submit, .menuCertif .submit, .menuCertifANC .submit, .menuMP .submit, .menuExtraEU .submit {
   float: right;
 }

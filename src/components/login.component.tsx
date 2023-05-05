@@ -71,7 +71,8 @@ export default function Login(props: Props) {
       (response) => {
 
         if (response.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response));
+          AuthService.setCurrentUser(response.accessToken);
+          //localStorage.setItem("user", JSON.stringify(response.accessToken));
           console.log("is user", response.accessToken);
 
         }

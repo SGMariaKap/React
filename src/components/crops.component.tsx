@@ -11,6 +11,7 @@ type State = {
   redirect: string | null,
   userReady: boolean,
   currentUserLang: string,
+  currentUserModulePermission:string,
   currentUser: IUser & { accessToken: string},
   content: string
 }
@@ -24,6 +25,7 @@ export default class Profile extends Component<Props, State> {
       redirect: null,
       userReady: false,
       currentUserLang: "",
+      currentUserModulePermission: "",
       currentUser: { accessToken: "" },
       content: ""
     };
@@ -32,16 +34,41 @@ export default class Profile extends Component<Props, State> {
   componentDidMount() {
     UserService.getLanguage().then(
       response => {
-        console.log("componentDidMount, response.data = ", response.data);
+        console.log("componentDidMount, language = ", response.data);
 
         this.setState({
           currentUserLang: response.data,
+          currentUserModulePermission: response.data,
 
         });
       },
       error => {
         this.setState({
           currentUserLang:
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString()
+        });
+
+        if (error.response && error.response.status === 401) {
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+     UserService.getModulePermission().then(
+      response => {
+        console.log("componentDidMount, module permission = ", response.data);
+
+        this.setState({
+          currentUserModulePermission: response.data,
+
+        });
+      },
+      error => {
+        this.setState({
+          currentUserModulePermission:
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
@@ -90,7 +117,7 @@ export default class Profile extends Component<Props, State> {
           </div>
           <div className="col-md-6 encartDownload">
           <p className="pt-2 pb-3 px-3">Download the raw data in CSV, XLS formats</p>
-          <form action="javascript:chgOptionMenuNiv3X(1028);" method="POST"><input type="submit" className="button " value="Access to download menu"/>
+          <form action="" method="POST"><input type="submit" className="button " value="Access to download menu"/>
 		      </form>
           </div>
         </div>
